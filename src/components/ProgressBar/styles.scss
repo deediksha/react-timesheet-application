@@ -1,0 +1,11 @@
+@import "../../styles/commons.scss";
+
+.progressbar {
+  width: 98%;
+  height: 1.5rem;
+  background-color: $grey-10;
+
+  .fill-progress {
+    height: 1.5rem;
+  }
+}

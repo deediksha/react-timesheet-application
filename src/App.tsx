@@ -8,6 +8,7 @@ import addIcon from './assets/plus-icon.svg';
 import { NewEntrySheet, IEntry } from './components/NewEntrySheet';
 import { TaskList } from './components/TaskList';
 import { storageKey } from './constants/constants';
+import { ProgressBar } from './components/ProgressBar';
 
 const App: React.FC = () => {
     const [isEntrySheetOpen, setIsEntrySheetOpen] = React.useState(false);
@@ -50,7 +51,10 @@ const App: React.FC = () => {
         <div className="app-container">
             <h1>Timesheet</h1>
             {entries.length > 0 ? (
+              <div>
+              <ProgressBar entries={entries}/>
                 <TaskList entries={entries} />
+                </div>
             ) : (
                 <p className="empty-text">No entries yet. Add a new entry by clicking the + button.</p>
             )}
