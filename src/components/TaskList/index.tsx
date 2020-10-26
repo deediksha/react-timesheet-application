@@ -25,13 +25,22 @@ export const TaskList: React.FC<ITaskListProps> = (props: ITaskListProps) => {
 };
 
 const TaskCard: React.FC<ITaskCardProps> = (props: ITaskCardProps) => {
+  
+  
     const {
-        entry: { task, hours, minutes },
+        entry: { task, hours, minutes, remark },
     } = props;
     return (
         <div className="task-card">
+           {/* Add onclick delete button  */}
+          <button className="delete-task-btn" ><img src="/static/media/cross-icon.3aaac615.svg" alt="close" className="delete-icon"></img></button>
+          <div className="task-header">
             <div className="task-title">{task}</div>
             <div className="task-time">{`${hours}h ${minutes}m`}</div>
+          </div>
+          <div className="task-content">
+            <p>{remark}</p>
+          </div>
         </div>
     );
 };

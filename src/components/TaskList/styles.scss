@@ -8,12 +8,38 @@
 
 .task-card {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   padding: 1em;
   border: 1px solid $grey-10;
-  border-radius: 4px;
+  border-radius: 10px;
   background: $white;
   margin: 1em 0;
+  position: relative;
+  width: 97%;
+
+  .delete-task-btn {
+    position: absolute;
+    right: -0.5em;
+    top: -0.5em;
+    border: none;
+    width: 1.75em;
+    height: 1.75em;
+    background-color: rgb(201, 199, 199);
+    border-radius: 100%;
+    padding: 0.5em;
+
+    .delete-icon {
+      right: 0em;
+      top: 0em;
+      width: 1.75em;
+      height: 1.75em;
+      position: absolute;
+    }
+  }
+  .task-header {
+    display: flex;
+    justify-content: space-between;
+  }
 
   .task-title {
     font-size: 1.5em;

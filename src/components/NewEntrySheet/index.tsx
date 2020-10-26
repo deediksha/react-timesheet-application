@@ -17,28 +17,48 @@ export interface IEntry {
     task: string;
     hours: string;
     minutes: string;
+    remark: string;
+    // key: number;
 }
 
 export const NewEntrySheet: React.FC<INewEntrySheet> = (props: INewEntrySheet) => {
     const [task, setTask] = React.useState(taskTypes[0]);
     const [hours, setHours] = React.useState('');
     const [minutes, setMinutes] = React.useState('');
+    const [remark, setRemark] = React.useState('');
+    const [btnColor, setBtnColor]= React.useState('disabled');
+    // const [key, setKey]= React.useState(0);
 
     const onTaskChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setTask(event.target.value);
     };
 
     const onHoursChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if(event.target.value)
+      setBtnColor('primary');
+      else
+      setBtnColor('disabled');
         setHours(event.target.value);
     };
 
     const onMinutesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if(event.target.value)
+      setBtnColor('primary');
+      else
+      setBtnColor('disabled');
         setMinutes(event.target.value);
     };
-
+    
+    const onRemarkChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setRemark(event.target.value);
+    }
+    // Added Key
     const onAddEntry = () => {
-        const entry: IEntry = { task, hours, minutes };
-        props.onAdd(entry);
+        // setKey(key+1);
+        if(task && (hours || minutes)){
+          const entry: IEntry = { task, hours, minutes, remark };
+          props.onAdd(entry);
+        }
     };
 
     return (
@@ -64,7 +84,7 @@ export const NewEntrySheet: React.FC<INewEntrySheet> = (props: INewEntrySheet) =
                     <label className="time-input">
                         Time Spent
                         <div className="time-input-fields">
-                            <div>
+                          <div className="hour-field">
                                 <input
                                     type="number"
                                     placeholder="hours"
@@ -86,11 +106,24 @@ export const NewEntrySheet: React.FC<INewEntrySheet> = (props: INewEntrySheet) =
                             </div>
                         </div>
                     </label>
-                </div>
+                  </div>
+                  <div className="column">
+                    <label className="remark-input">
+                      Remarks:
+                        <input 
+                        type="textarea" 
+                        className="remark-input-field" 
+                        onChange={onRemarkChange}
+                        value={remark}
+                        />
+                    </label>
+                  </div>
+                    
+                
             </div>
             <div className="sheet-footer">
                 <div className="action-group">
-                    <Button id="submit-task-button" color="primary" onClick={onAddEntry}>
+                    <Button id="submit-task-button" color={btnColor} onClick={onAddEntry}>
                         Add Entry
                     </Button>
                 </div>

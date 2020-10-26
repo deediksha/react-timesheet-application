@@ -30,7 +30,13 @@ const App: React.FC = () => {
             window.localStorage.setItem(storageKey, JSON.stringify([entry]));
         }
         closeEntrySheet();
+        console.log(entry);
     };
+    
+    // const onDeleteTask(){
+    //   const existingTasksString = window.localStorage.getItem(storageKey);
+    //   console.log(existingTasksString);
+    // }
 
     const getTaskEntries = () => {
         const entriesString = window.localStorage.getItem(storageKey);
