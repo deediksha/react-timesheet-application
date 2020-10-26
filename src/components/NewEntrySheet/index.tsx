@@ -18,16 +18,16 @@ export interface IEntry {
     hours: string;
     minutes: string;
     remark: string;
-    // key: number;
+    id: number;
 }
 
 export const NewEntrySheet: React.FC<INewEntrySheet> = (props: INewEntrySheet) => {
-    const [task, setTask] = React.useState(taskTypes[0]);
+    const [task, setTask] = React.useState(taskTypes[0].task);
     const [hours, setHours] = React.useState('');
     const [minutes, setMinutes] = React.useState('');
     const [remark, setRemark] = React.useState('');
     const [btnColor, setBtnColor]= React.useState('disabled');
-    // const [key, setKey]= React.useState(0);
+    // const [id, setId]= React.useState(0);
 
     const onTaskChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setTask(event.target.value);
@@ -56,7 +56,9 @@ export const NewEntrySheet: React.FC<INewEntrySheet> = (props: INewEntrySheet) =
     const onAddEntry = () => {
         // setKey(key+1);
         if(task && (hours || minutes)){
-          const entry: IEntry = { task, hours, minutes, remark };
+          // setId(Date.now());
+          let id=Date.now();
+          const entry: IEntry = { id, task, hours, minutes, remark };
           props.onAdd(entry);
         }
     };
@@ -76,8 +78,8 @@ export const NewEntrySheet: React.FC<INewEntrySheet> = (props: INewEntrySheet) =
                     <label className="task-input">
                         Task Type
                         <select className="task-select" onChange={onTaskChange} value={task}>
-                            {taskTypes.map((task: string) => (
-                                <option value={task}>{task}</option>
+                            {taskTypes.map((task: object, index) => (
+                                <option value={taskTypes[index].task}>{taskTypes[index].task}</option>
                             ))}
                         </select>
                     </label>

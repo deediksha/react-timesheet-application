@@ -12,6 +12,8 @@ import { ProgressBar } from './components/ProgressBar';
 
 const App: React.FC = () => {
     const [isEntrySheetOpen, setIsEntrySheetOpen] = React.useState(false);
+    
+    const [allEntries, setEntries]= React.useState([]);
 
     const openEntrySheet = () => {
         setIsEntrySheetOpen(true);
@@ -31,13 +33,21 @@ const App: React.FC = () => {
             window.localStorage.setItem(storageKey, JSON.stringify([entry]));
         }
         closeEntrySheet();
-        console.log(entry);
     };
     
-    // const onDeleteTask(){
-    //   const existingTasksString = window.localStorage.getItem(storageKey);
-    //   console.log(existingTasksString);
-    // }
+    const onDeleteTask=( id: number)=>{
+      const existingTasksString = window.localStorage.getItem(storageKey);
+      if (existingTasksString) {
+          const existingTasks = JSON.parse(existingTasksString);
+          existingTasks.forEach((entry: IEntry, index: number) => {
+            if(id === entry.id){
+              existingTasks.splice(index, 1);
+            }
+          });
+          window.localStorage.setItem(storageKey, JSON.stringify(existingTasks));
+          setEntries(existingTasks);
+      } 
+    };
 
     const getTaskEntries = () => {
         const entriesString = window.localStorage.getItem(storageKey);
@@ -53,7 +63,7 @@ const App: React.FC = () => {
             {entries.length > 0 ? (
               <div>
               <ProgressBar entries={entries}/>
-                <TaskList entries={entries} />
+                <TaskList entries={entries} onDeleteTask={onDeleteTask} key={Date.now()}/>
                 </div>
             ) : (
                 <p className="empty-text">No entries yet. Add a new entry by clicking the + button.</p>
