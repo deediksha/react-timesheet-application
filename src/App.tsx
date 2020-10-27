@@ -55,7 +55,7 @@ const App: React.FC = () => {
         return entries;
     };
 
-    const entries = getTaskEntries();
+    const entries = getTaskEntries(); 
 
     return (
         <div className="app-container">

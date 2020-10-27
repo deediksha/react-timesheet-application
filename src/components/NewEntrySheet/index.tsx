@@ -22,7 +22,7 @@ export interface IEntry {
 }
 
 export const NewEntrySheet: React.FC<INewEntrySheet> = (props: INewEntrySheet) => {
-    const [task, setTask] = React.useState(taskTypes[0].task);
+    const [task, setTask] = React.useState(taskTypes[0]);
     const [hours, setHours] = React.useState('');
     const [minutes, setMinutes] = React.useState('');
     const [remark, setRemark] = React.useState('');
@@ -55,7 +55,9 @@ export const NewEntrySheet: React.FC<INewEntrySheet> = (props: INewEntrySheet) =
     // Added Key
     const onAddEntry = () => {
         // setKey(key+1);
-        if(task && (hours || minutes)){
+        if(task && 
+          ((!isNaN(parseInt(hours)) && parseInt(hours)>=0 && parseInt(hours)<=24) || (!isNaN(parseInt(minutes)) && parseInt(minutes)>=0 && parseInt(minutes)<=60)) &&
+        (parseInt(minutes) || parseInt(hours))){
           // setId(Date.now());
           let id=Date.now();
           const entry: IEntry = { id, task, hours, minutes, remark };
@@ -78,8 +80,8 @@ export const NewEntrySheet: React.FC<INewEntrySheet> = (props: INewEntrySheet) =
                     <label className="task-input">
                         Task Type
                         <select className="task-select" onChange={onTaskChange} value={task}>
-                            {taskTypes.map((task: object, index) => (
-                                <option value={taskTypes[index].task}>{taskTypes[index].task}</option>
+                            {taskTypes.map((task: string, index) => (
+                                <option value={task} key={index}>{task}</option>
                             ))}
                         </select>
                     </label>
